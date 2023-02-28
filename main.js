@@ -51,6 +51,26 @@ tl.fromTo(mesh.scale, {x: 0, y: 0, z: 0}, {x: 1, y: 1, z: 1});
 tl.fromTo("nav", {y: "-100%"}, {y: "0%"});
 tl.fromTo(".heading", {opacity: 0}, {opacity: 1});
 
+let mouseDown = false;
+let rgb = [];
+window.addEventListener('mousedown', () => (mouseDown = true));
+window.addEventListener('mouseup', () => (mouseDown = false));
+window.addEventListener('mousemove', (e) => {
+  if(mouseDown){
+    rgb = [
+      Math.round((e.pageX / adjust.wid) * 255),
+      Math.round((e.pageY / adjust.hei) * 255), 
+      180,
+    ]
+    let myColor = new THREE.Color(`rgb(${rgb.join(",")})`);
+    gsap.to(mesh.material.color, {
+      r: myColor.r,
+      g: myColor.g,
+      b: myColor.b,
+    })
+  }
+})
+
 const loop = () => {
   controls.update();
   renderer.render(scene, camera);
