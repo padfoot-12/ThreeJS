@@ -10,7 +10,12 @@ const material = new THREE.MeshStandardMaterial({
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
-const camera = new THREE.PerspectiveCamera(45, 800 / 600);
+const adjust = {
+  wid: window.innerWidth,
+  hei: window.innerHeight,
+}
+
+const camera = new THREE.PerspectiveCamera(45, adjust.wid/adjust.hei, 0.1, 100);
 camera.position.z=20;
 scene.add(camera);
 
@@ -20,5 +25,5 @@ scene.add(light);
 
 const canvas = document.querySelector(".webgl");
 const renderer = new THREE.WebGLRenderer({canvas});
-renderer.setSize(800, 600);
+renderer.setSize(adjust.wid, adjust.hei);
 renderer.render(scene, camera);
