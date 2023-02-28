@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import "./style.css";
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 const scene = new THREE.Scene();
 
@@ -27,6 +28,7 @@ const canvas = document.querySelector(".webgl");
 const renderer = new THREE.WebGLRenderer({canvas});
 renderer.setSize(adjust.wid, adjust.hei);
 renderer.render(scene, camera);
+renderer.setPixelRatio(2);
 
 window.addEventListener('resize', () => {
   adjust.wid = window.innerWidth;
@@ -36,7 +38,15 @@ window.addEventListener('resize', () => {
   renderer.setSize(adjust.wid, adjust.hei);
 })
 
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.enablePan = false;
+controls.enableZoom = false;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 6;
+
 const loop = () => {
+  controls.update();
   renderer.render(scene, camera);
   window.requestAnimationFrame(loop);
 }
