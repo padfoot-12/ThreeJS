@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import "./style.css";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import gsap from "gsap";
 
 const scene = new THREE.Scene();
 
@@ -44,6 +45,11 @@ controls.enablePan = false;
 controls.enableZoom = false;
 controls.autoRotate = true;
 controls.autoRotateSpeed = 6;
+
+const tl = gsap.timeline({defaults: {duration: 1}});
+tl.fromTo(mesh.scale, {x: 0, y: 0, z: 0}, {x: 1, y: 1, z: 1});
+tl.fromTo("nav", {y: "-100%"}, {y: "0%"});
+tl.fromTo(".heading", {opacity: 0}, {opacity: 1});
 
 const loop = () => {
   controls.update();
